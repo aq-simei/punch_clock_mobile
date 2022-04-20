@@ -1,5 +1,5 @@
 import { Image } from "react-native";
-import { Container, LogoContainer, Title } from "./header-styles";
+import { Container, LogoContainer, Title } from "./header.styles";
 import CMLogo from "../../../assets/codeminer-logo.png";
 import CogIcon from "../../../assets/icons/cog.png";
 
