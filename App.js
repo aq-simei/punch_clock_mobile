@@ -1,5 +1,5 @@
 import { SafeAreaView, StatusBar } from "react-native";
-import { ThemeProvider } from "styled-components";
+import { ThemeProvider } from "styled-components/native";
 import MainNavigator from "./src/navigation/main-navigator";
 import theme from "./src/styles/theme";
 

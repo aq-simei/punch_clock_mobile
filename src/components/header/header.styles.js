@@ -1,8 +1,9 @@
 import styled from "styled-components/native";
-import { verticalScale, scale } from "react-native-size-matters";
+import { verticalScale, scale, moderateScale } from "react-native-size-matters";
+import { Platform } from "react-native";
 
 export const Container = styled.View`
-  height: ${verticalScale(130)}px;
+  height: ${Platform.OS === "web" ? verticalScale(90) : verticalScale(130)}px;
   width: 100%;
   background-color: ${({ theme }) => theme.colors.primary};
   flex-direction: row;
@@ -14,6 +15,16 @@ export const Container = styled.View`
 export const LogoContainer = styled.View`
   flex-direction: row;
   align-items: center;
+`;
+
+export const Logo = styled.Image`
+  width: ${moderateScale(50)}px;
+  height: ${moderateScale(45)}px;
+`;
+
+export const SettingsIcon = styled.Image`
+  width: ${moderateScale(25)}px;
+  height: ${moderateScale(27)}px;
 `;
 
 export const Title = styled.Text`
