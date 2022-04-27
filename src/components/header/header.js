@@ -12,7 +12,7 @@ function Header() {
   return (
     <Container>
       {canGoBack && (
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity onPress={() => navigation.goBack()} testID='canGoBack-button'>
           <MaterialIcons name="arrow-back-ios" size={24} color="white" />
         </TouchableOpacity>
       )}
@@ -21,7 +21,7 @@ function Header() {
         <Title>PunchClock</Title>
       </LogoContainer>
       <TouchableOpacity onPress={() => navigation.navigate("SettingsScreen")}>
-        <Image source={CogIcon} />
+        <Image source={CogIcon} testID='cog-icon'/>
       </TouchableOpacity>
     </Container>
   );
