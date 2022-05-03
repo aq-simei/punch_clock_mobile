@@ -19,7 +19,10 @@ function Header() {
   return (
     <Container>
       {canGoBack && (
-        <TouchableOpacity onPress={() => navigation.goBack()} testID='canGoBack-button'>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          testID="canGoBack-button"
+        >
           <MaterialIcons
             name="arrow-back-ios"
             size={moderateScale(24)}
@@ -31,7 +34,7 @@ function Header() {
         <Logo source={CMLogo} />
         <Title>PunchClock</Title>
       </LogoContainer>
-      <TouchableOpacity onPress={() => navigation.navigate("SettingsScreen")} testID='cog-icon'>
+      <TouchableOpacity onPress={() => navigation.navigate("SettingsScreen")}>
         <SettingsIcon source={CogIcon} />
       </TouchableOpacity>
     </Container>

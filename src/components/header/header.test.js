@@ -1,52 +1,58 @@
 import { render, fireEvent } from "../../test/test-utils";
 import Header from "./header";
+import { useNavigation } from "@react-navigation/native";
 
-const mockedNavigation = jest.fn();
-const mockedCanGoBack = jest.fn();
+const mockGoBack = jest.fn();
+
 jest.mock("@react-navigation/native", () => ({
   ...jest.requireActual("@react-navigation/native"),
-  useNavigation: () => ({
-    navigate: mockedNavigation,
-    canGoBack: mockedCanGoBack,
-  }),
+  useNavigation: jest.fn(() => ({
+    navigate: jest.fn(),
+    canGoBack: () => true,
+    goBack: mockGoBack,
+  })),
 }));
 
+const setup = () => render(<Header />);
+
 describe("Header", () => {
+  beforeEach(() => {
+    mockGoBack.mockClear();
+  });
+
   it("renders a PunchClock title", () => {
-    const headerComponent = render(<Header />);
-    const headerTitle = headerComponent.getByText("PunchClock");
-    
+    const { getByText } = setup();
+    const headerTitle = getByText("PunchClock");
+
     expect(headerTitle).toBeTruthy();
   });
-  describe("when the user navigate on the app", () => {
-    beforeEach(() => {
-      mockedNavigation.mockClear();
-      mockedCanGoBack.mockImplementation(()=> false)
-    });
 
-    afterEach(() => {
-      jest.clearAllMocks();
-    });
+  describe("when canGoBack is true", () => {
+    it("renders the arrow back", () => {
+      const { getByTestId } = setup();
+      const canGoBackButton = getByTestId("canGoBack-button");
 
-    it("renders a CanGoBack button", () => {
-      mockedCanGoBack.mockImplementation(()=> true)
-      const headerComponent = render(<Header />);
-      const cogIcon = headerComponent.getByTestId("cog-icon");
-
-      fireEvent.press(cogIcon);
-      const canGoBackButton = headerComponent.getByTestId("canGoBack-button");
-
-      expect(mockedNavigation).toHaveBeenCalledTimes(1);
       expect(canGoBackButton).toBeTruthy();
     });
-  });
-  describe('When the user is on the home page', () => {
-    it("doesn't render a CanGoBack button", () => {
-      mockedCanGoBack.mockImplementation(()=> false)
-      
-      const headerComponent = render(<Header />);
 
-      expect(headerComponent.queryByTestId('canGoBack-button')).toBeNull();
+    it("calls goBack", () => {
+      const { getByTestId } = setup();
+      const canGoBackButton = getByTestId("canGoBack-button");
+      fireEvent.press(canGoBackButton);
+
+      expect(mockGoBack).toHaveBeenCalledTimes(1);
     });
-  })
+  });
+
+  describe("When canGoBack is false", () => {
+    it("doesn't render the arrow back", () => {
+      useNavigation.mockReturnValue({
+        canGoBack: () => false,
+      });
+
+      const { queryByTestId } = setup();
+
+      expect(queryByTestId("canGoBack-button")).toBeNull();
+    });
+  });
 });
