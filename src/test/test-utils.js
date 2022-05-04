@@ -5,7 +5,6 @@ import { render } from "@testing-library/react-native";
 
 const CustomRender = (ui, options) => {
   return render(
-
     <ThemeProvider theme={theme}>
       <NavigationContainer>
         {ui}
