@@ -37,7 +37,7 @@ describe("Header", () => {
 
     it("calls goBack", () => {
       const { getByTestId } = setup();
-      const canGoBackButton = getByTestId("canGoBack-button");
+      const canGoBackButton = getByTestId("canGock-button");
       fireEvent.press(canGoBackButton);
 
       expect(mockGoBack).toHaveBeenCalledTimes(1);
